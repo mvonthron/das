@@ -1,0 +1,13 @@
+<!-- This file is part of DAS (http://www.acadis.org/pages/das/) -->
+<!-- Target language: French (fr-FR) -->
+<!-- Author: Manuel Vonthron (manuel DOT vonthron AT acadis DOT org) -->
+
+<!ENTITY dasFullName       "Deezer AudioScrobbler">
+<!ENTITY dasShortName      "DAS">
+
+<!ENTITY menu.about.label           "À propos...">
+<!ENTITY menu.settings.label        "Paramètres...">
+<!ENTITY menu.services.label        "Services">
+<!ENTITY menu.lastfm.label          "Envoyer vers Last.FM">
+<!ENTITY menu.deezer.label          "Écouter Deezer.com">
+<!ENTITY menu.showOnStatusbar.label "Afficher dans la barre d'état">
