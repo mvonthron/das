@@ -9,5 +9,6 @@
 <!ENTITY menu.settings.label        "Settings...">
 <!ENTITY menu.services.label        "Services">
 <!ENTITY menu.lastfm.label          "Send to Last.FM">
+<!ENTITY menu.lastfm.reload.label   "Reconnect to Last.FM">
 <!ENTITY menu.deezer.label          "Listen to Deezer.com">
 <!ENTITY menu.showOnStatusbar.label "Show track in statusbar">

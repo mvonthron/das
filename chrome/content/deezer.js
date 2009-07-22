@@ -38,8 +38,8 @@ var grabber = function(){
   this.init();
 }
 grabber.prototype = {
-  deezerURL: 'http://www.deezer.com/',
-  deezerGateway: 'http://www.deezer.com/services/remoting/gateway.php',
+  deezerURL: 'www-v3.deezer.com',
+  deezerGateway: 'http://api-v3.deezer.com/1.0/gateway.php',
   link: null,
   
   init: function(){
@@ -53,18 +53,21 @@ grabber.prototype = {
    * Informations extractor inspirated by DeezerMSN from Bandikaz
    */
   observe: function(link, event, c){
-    if(!prefs.listenDeezer)
+  
+    if(!prefs.listenDeezer){
       return;
+    }
     try {
       link.QueryInterface(Components.interfaces.nsIHttpChannel);
-      if(link.URI.asciiSpec.indexOf('http://www.deezer.com/services/remoting/gateway.php') != 0) 
+      if(link.URI.asciiSpec.indexOf(this.deezerGateway) != 0)
         return;
+
       link.notificationCallbacks.getInterface(Components.interfaces.nsIWebProgress);
       // fenêtre initiatrice de la requête = page de deezer (contenant le swf, donc)
       var win = link.notificationCallbacks.DOMWindow; 
       // on vérifie qu'on est bien sur le site Deezer 
       // sinon n'importe quel site peut modifier le pseudo en générant une "fausse" requête sur deezer
-      if(win.location.hostname != 'www.deezer.com') return; 
+      if(win.location.hostname != this.deezerURL) return; 
       link.QueryInterface(Components.interfaces.nsIUploadChannel);
       link.uploadStream.QueryInterface(Components.interfaces.nsISeekableStream);
       link.uploadStream.seek(0,0);
@@ -80,12 +83,21 @@ grabber.prototype = {
 
       stream.close();
       link.uploadStream.close();
-            
-      var tab = (/^[\x00-\xff]*interfaces\.dzGetTrackKey[\x00-\xff]*(?:\u0020[a-f0-9]{32}|[0-9]+_[a-zA-Z0-9]+\.mp3)\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\u0000-\uffff]([0-9]+?)(?:\x06)?\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\x00-\xff]*$/).exec(output);
+      
+      //display.dump(output);
+      
+      
+      /* regexp Deezer v2 by Bandikaz */
+      //var tab = (/^[\x00-\xff]*interfaces\.dzGetTrackKey[\x00-\xff]*(?:\u0020[a-f0-9]{32}|[0-9]+_[a-zA-Z0-9]+\.mp3)\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\u0000-\uffff]([0-9]+?)(?:\x06)?\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\u0000-\uffff](.*?)(?:\x06)?\x02[\x00-\xff]*$/).exec(output);
+      
+      /* regexp Deezer v3 */
+      //var tab = (/^[\x00-\xff]*SNG_TITLE\x02\x14(.*?)\x06[\x00-\xff]*ART_NAME\x02\x06(.*?)\x07[\x00-\xff]*ALB_TITLE\x02\x14(.*?)\x06[\x00-\xff]*$/).exec(output);
+      var tab = (/^[\x00-\xff]*SNG_TITLE\x02[\x00-\xff](.*?)\x06[\x00-\xff]*ART_NAME\x02[\x00-\xff](.*?)\x07[\x00-\xff]*ALB_TITLE\x02[\x00-\xff](.*?)\x06[\x00-\xff]*$/).exec(output);
+
       // on élimine les requêtes qui ne renseignent pas sur le titre en cours de lecture
       if(tab == null)
         return;
-      var song = new track(tab[4], tab[3], tab[1]);
+      var song = new track(tab[2], tab[3], tab[1]);
       
       display.dump('artist: '+song.artist+', '
                 +'album: '+song.album+', '

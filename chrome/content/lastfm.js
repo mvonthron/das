@@ -88,6 +88,8 @@ scrobbler.prototype = {
           lastfm.connected = false;
           display.statusicon('NOTCONNECTED');
         }
+        if(result[0] != 'OK')
+          this.reconnect();
         else{
           lastfm.session = result[1];
           lastfm.url = result[3];
@@ -115,6 +117,10 @@ scrobbler.prototype = {
     this.disconnect();
     this.init(user, passwd);
     this.connect();
+  },
+  
+  reconnect: function(){
+    this.reconnect(this.user, this.passwd);
   },
 
   push: function(song){

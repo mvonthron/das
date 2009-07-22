@@ -65,8 +65,10 @@
           <menupopup id='das-enabling-menu'>
             <menuitem label="&menu.deezer.label;" id="listenDeezer" type='checkbox'
               oncommand="tooglepref('listenDeezer')"/>
+            <menuseparator />
             <menuitem label="&menu.lastfm.label;" id="sendLastfm" type='checkbox'
               oncommand="tooglepref('sendLastfm')"/>
+            <!--<menuitem label="&menu.lastfm.reload.label;" id="reloadLastfm" oncommand="lastfm.reconnect();" />-->
           </menupopup>
         </menu>
     </popup>
