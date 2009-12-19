@@ -86,7 +86,7 @@ grabber.prototype = {
       
       //display.dump(output);
       
-      if(!(/^Referer: http:\/\/files.deezer.com\/swf\/player-v35.swf.*/).exec(output)){
+      if(!(/^Referer: http:\/\/files.deezer.com\/swf\/player.*/).exec(output)){
         //display.dump("Not a usefull call");
         return;
       }
