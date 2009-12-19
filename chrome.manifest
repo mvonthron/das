@@ -1,0 +1,5 @@
+content das chrome/content/ xpcnativewrappers=yes
+skin    das default chrome/skin/
+locale  das fr-FR   chrome/locale/fr-FR/
+locale  das en-US   chrome/locale/en-US/
+overlay chrome://browser/content/browser.xul  chrome://das/content/overlay.xul
