@@ -19,6 +19,7 @@
  *
  * Contributor(s):
  *  - Manuel Vonthron <manuel.vonthron@acadis.org>, 2009
+ *  - Damien Alexandre <contact@damienalexandre.fr>, 2009
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -86,7 +87,7 @@ grabber.prototype = {
       
       //display.dump(output);
       
-      if(!(/^Referer: http:\/\/files.deezer.com\/swf\/player.*/).exec(output)){
+      if(!(/^Referer: http:\/\/.*\.deezer.com\/swf\/player.*/).exec(output)){
         //display.dump("Not a usefull call");
         return;
       }
