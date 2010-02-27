@@ -1,0 +1,71 @@
+/* Deezer AudioScrobbler  TODO */
+
+* proprifier le code, notamment ce qui concerne les requetes
+* rajouter du try-catch
+* passer en trunk avant de faire de grosses modifs qui cassent tout
+
+* passer les donnees envoyees en UTF-8
+* enlever eval (fail au test AMO)
+ 
+v0.x
+------
+* switch to now-playing methods
+
+* mettre en place une Queue de track a pusher
+* une track n'est pas envoyee si elle est la derniere, il doit etre 
+	possible de l'annuler si on se rend compte qu'elle est jouee moins de 
+	20s par exemple
+* si part de la page Deezer => on vide la Queue (y compris la derniere 
+	si temps de lecture suffisamment long) et on se met en stanby 
+	(effacement du messade de statusbar)
+
+* support générique des grabber/scrobbler
+	Chargement/déchargement dynamique :
+	>>	On page open:
+	> if g.url == page.url with g in available_grabbers:
+	>		if grabber != null
+	> 		grabber.unload()
+	>		grabber = new g
+	>		grabber.load()
+		
+	>> On page exit: 
+	>	if page.url == grabber.url
+	>		scrobblers.flush()
+	> 	grabber.unload()
+	>		grabber = null
+	
+*	Grabbers :
+	- Deezer V3
+	- Jiwa.fm
+	- Jamendo
+
+	Methods/properties : 
+	- load()
+	- unload()
+	- id
+	- name
+	- url
+	
+* Scrobblers :
+	Support de scrobblers multiples en même temps :
+	> scrobblers.method(): 
+	> 	forearch s in scrobbler_list:
+	>			s.method()
+	
+	- Last.fm
+	- Deezer V3
+	
+	Methods/properties : (si toutes ne sont pas implémentées : muet)
+	- push(track)
+	- flush()
+	~ set_favorite(track)
+	~ unset_favorite(track)
+	- id 
+	- name
+	- baseurl
+	- accounturl
+
+v1.0
+----
+* fonctionnalités supplémentaires : => clic droit titre : envoi vers parge last.fm
+* tag favourite lastf.fm
